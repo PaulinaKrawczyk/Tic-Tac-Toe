@@ -14,7 +14,6 @@ class Main {
             if (a[j] + 1 == a[j + 1]  && a[j + 1] + 1  == a[j + 2]) {
                 triples++;
             }
-
         }
         System.out.println(triples);
     }

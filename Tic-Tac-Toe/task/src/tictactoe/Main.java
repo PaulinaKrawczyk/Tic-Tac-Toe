@@ -15,9 +15,7 @@ public class Main {
             else if (i % 3 == 1) {
                 System.out.print(array[i]);
             }
-            else if (i % 3 == 2) {
-                System.out.println(" " + array[i] + " |");
-            }
+            else  System.out.println(" " + array[i] + " |");
         }
         System.out.println("---------");
 
