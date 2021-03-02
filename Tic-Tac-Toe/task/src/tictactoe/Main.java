@@ -17,7 +17,7 @@ public class Main {
             }
             else  System.out.println(" " + array[i] + " |");
         }
-        System.out.println("");
+        System.out.println("---------");
 
 
     }
