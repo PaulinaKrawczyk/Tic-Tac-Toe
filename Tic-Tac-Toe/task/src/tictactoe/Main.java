@@ -6,9 +6,9 @@ import java.util.Scanner;
 public class Main {
 	public static void main(String[] args) {
 		Scanner scanner = new Scanner(System.in);
-		System.out.println("Enter cells:");
-		String string = scanner.next();
-		char[] array = string.toCharArray();
+//		System.out.println("Enter cells:");
+//		String string = scanner.next();
+//		char[] array = string.toCharArray();
 
 		int sumX = 0;
 		int sumO = 0;
@@ -20,43 +20,34 @@ public class Main {
 		boolean winO = false;
 		int first = 0;
 		int second = 0;
-
-		System.out.println("---------");
-		for (int i = 0; i < string.length(); i++) {
-			if (i % 3 == 0) {
-				System.out.print("| " + array[i] + " ");
-			} else if (i % 3 == 1) {
-				System.out.print(array[i]);
-			} else System.out.println(" " + array[i] + " |");
-		}
-		System.out.println("---------");
-		int[][] asciiArray = new int[3][3];
 		char[][] arr = new char[3][3];
+		int[][] asciiArray = new int[3][3];
+		int move = 0;
 
-		for (char c : array) {
-			if (c == 'X') {
-				sumX++;
-			} else if (c == 'O') {
-				sumO++;
-			}
-		}
 		for (int i = 0; i < 3; i++) {
 			for (int j = 0; j < 3; j++) {
-				asciiArray[i][j] = array[i * 3 + j];
-				arr[i][j] = array[i * 3 + j];
-
+				arr[i][j] = '_';
+				asciiArray[i][j] = 95;
 			}
 		}
 
+		System.out.println("---------");
+		for (int i = 0; i < 3; i++) {
+			System.out.print("| ");
+			for (int j = 0; j < 3; j++) {
+				System.out.print(arr[i][j] + " ");
+			}
+			System.out.println("|");
+		}
+		System.out.println("---------");
 
-//		if (scanner.hasNextInt()) {
-//			first = scanner.nextInt();
-//			second = scanner.nextInt();
-//		} else {
-//			System.out.println("You should enter numbers!");
+//		for (int i = 0; i < 3; i++) {
+//			for (int j = 0; j < 3; j++) {
+//				asciiArray[i][j] = array[i * 3 + j];
+//				arr[i][j] = array[i * 3 + j];
+//
+//			}
 //		}
-//		while (true) {
-
 		do {
 			System.out.println("Enter the coordinates:");
 			try {
@@ -67,13 +58,19 @@ public class Main {
 				scanner.nextLine();
 				continue;
 			}
-//		System.out.println(first);
-//		System.out.println(second);
-
 
 			if (first > 0 && first < 4 && second > 0 && second < 4) {
 				if (arr[first - 1][second - 1] == '_') {
-					arr[first - 1][second - 1] = 'X';
+					move++;
+					if (move % 2 == 1) {
+						arr[first - 1][second - 1] = 'X';
+						asciiArray[first - 1][second - 1] = 88;
+						sumX++;
+					} else {
+						arr[first - 1][second - 1] = 'O';
+						asciiArray[first - 1][second - 1] = 79;
+						sumO++;
+					}
 					System.out.println("---------");
 					for (int i = 0; i < 3; i++) {
 						System.out.print("| ");
@@ -83,7 +80,7 @@ public class Main {
 						System.out.println("|");
 					}
 					System.out.println("---------");
-					break;
+
 				} else {
 					System.out.println("This cell is occupied! Choose another one!");
 				}
@@ -91,30 +88,35 @@ public class Main {
 				System.out.println("Coordinates should be from 1 to 3!");
 			}
 
+
+			for (int i = 0; i < 3; i++) {
+				sumLeftRight = asciiArray[i][0] + asciiArray[i][1] + asciiArray[i][2];
+				sumTopDown = asciiArray[0][i] + asciiArray[1][i] + asciiArray[2][i];
+				sumDiag = asciiArray[0][0] + asciiArray[1][1] + asciiArray[2][2];
+				sumSecondDiagonal = asciiArray[2][0] + asciiArray[1][1] + asciiArray[0][2];
+				if (sumLeftRight == 264 || sumTopDown == 264 || sumDiag == 264 || sumSecondDiagonal == 264) {
+					winX = true;
+				} else if (sumLeftRight == 237 || sumTopDown == 237 || sumDiag == 237 || sumSecondDiagonal == 237) {
+					winO = true;
+				}
+			}
+//			if (winO && winX || Math.abs(sumX - sumO) > 1) {
+//				System.out.println("Impossible");
+//			} else
+			if (winX) {
+				System.out.println("X wins");
+				return;
+			} else if (winO) {
+				System.out.println("O wins");
+				return;
+			} else if (sumX + sumO == 9) {
+				System.out.println("Draw");
+				break;
+			}
+//			else
+//				System.out.println("Game not finished");
+
 		} while (true);
-//		for (int i = 0; i < 3; i++) {
-//			sumLeftRight = asciiArray[i][0] + asciiArray[i][1] + asciiArray[i][2];
-//			sumTopDown = asciiArray[0][i] + asciiArray[1][i] + asciiArray[2][i];
-//			sumDiag = asciiArray[0][0] + asciiArray[1][1] + asciiArray[2][2];
-//			sumSecondDiagonal = asciiArray[2][0] + asciiArray[1][1] + asciiArray[0][2];
-//
-//			if (sumLeftRight == 264 || sumTopDown == 264 || sumDiag == 264 || sumSecondDiagonal == 264) {
-//				winX = true;
-//			} else if (sumLeftRight == 237 || sumTopDown == 237 || sumDiag == 237 || sumSecondDiagonal == 237) {
-//				winO = true;
-//			}
-//		}
-//		if (winO && winX || Math.abs(sumX - sumO) > 1) {
-//			System.out.println("Impossible");
-//		} else if (winX) {
-//			System.out.println("X wins");
-//		} else if (winO) {
-//			System.out.println("O wins");
-//		} else if (sumX + sumO == 9) {
-//			System.out.println("Draw");
-//		} else
-//			System.out.println("Game not finished");
-//
 	}
 }
 
